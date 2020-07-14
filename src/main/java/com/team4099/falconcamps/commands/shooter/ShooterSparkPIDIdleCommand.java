@@ -12,5 +12,7 @@ public class ShooterSparkPIDIdleCommand extends CommandBase {
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+      shooter.setSetpoint (0) 
+    }
 }
