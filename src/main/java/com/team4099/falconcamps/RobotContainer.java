@@ -10,7 +10,7 @@ public class RobotContainer {
     private final ShooterPIDSubsystem containershooter = new ShooterPIDSubsystem();
     XboxController drivController = new XboxController(0)
     public RobotContainer() {
+        containershooter.setDefaultCommand(new ShooterPIDSubsystemIdleCommand(containershooter));
         new Trigger(driverController::getAButton).whileActive(new ShootPIDSubsystemCommand(containershooter));
-        setDefaultCommand
     }
 }
