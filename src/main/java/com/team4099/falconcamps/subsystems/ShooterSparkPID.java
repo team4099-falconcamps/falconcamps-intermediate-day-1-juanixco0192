@@ -11,19 +11,23 @@ public class ShooterSparkPID extends SubsystemBase {
     private final CANEncoder shooterEncoder = shooterLeader.getEncoder();
     private final CANPIDController pidController = shooterFollower.getPIDController();
 
-    public ShooterSparkPID() {super(new PIDController(1.7/ 300, 0.0, 5.5 * 14000));
-    }
+    public ShooterSparkPID() { 
+        pidController.setP(1.7 / 300);
+        pidController.setI(0.0);
+        pidController.setD(5.5 * 14000);
+        shooterFollower.follow(shooterLeader, true);
+        } 
+
     public double getCurrentVelocity() {
         return shooterEncoder.getVelocity();
     }
     
-    public double getMeasurement() {
-        return getCurrentVelocity();
-    }
-    public void useOutput(double setPoint,double output) {
-        shooterLeader.set(output);
+    public void setTargetVelocity(double setPoint) {
+        TargetVelocity = setPoint;
     }
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        pidController.setReference(TargetVelocity, ControlType.kVelocity);
+    }
 }
